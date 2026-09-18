@@ -1,4 +1,6 @@
 .env
 __pycache__/
 data/raw/
+data/processed/*.csv
 .ipynb_checkpoints
+iTrust/
