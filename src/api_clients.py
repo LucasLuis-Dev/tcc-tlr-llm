@@ -37,27 +37,37 @@ def call_gemini(prompt: str, model_name: str = "gemini-3.6-flash") -> str:
         ]
     }
 
-    try:
-        response = requests.post(url, headers=headers, json=payload, timeout=60)
-        response.raise_for_status()
-        data = response.json()
-        
-        # Extrai o texto da resposta
-        candidates = data.get("candidates", [])
-        if not candidates:
-            return "Nenhuma resposta retornada pela API do Gemini."
+    import time
+    max_retries = 3
+    for attempt in range(1, max_retries + 1):
+        try:
+            response = requests.post(url, headers=headers, json=payload, timeout=60)
+            response.raise_for_status()
+            data = response.json()
             
-        parts = candidates[0].get("content", {}).get("parts", [])
-        if not parts:
-            return "Conteúdo vazio retornado pelo Gemini."
-            
-        return parts[0].get("text", "").strip()
+            # Extrai o texto da resposta
+            candidates = data.get("candidates", [])
+            if not candidates:
+                return "Nenhuma resposta retornada pela API do Gemini."
+                
+            parts = candidates[0].get("content", {}).get("parts", [])
+            if not parts:
+                return "Conteúdo vazio retornado pelo Gemini."
+                
+            return parts[0].get("text", "").strip()
 
-    except requests.exceptions.RequestException as e:
-        print(f"[ERRO Gemini API]: Falha na requisição HTTP - {e}")
-        if hasattr(e, "response") and e.response is not None:
-            print(f"[Detalhes]: {e.response.text}")
-        return f"ERRO_REQUISICAO: {e}"
+        except requests.exceptions.RequestException as e:
+            status_code = getattr(getattr(e, "response", None), "status_code", None)
+            if status_code in (503, 429) and attempt < max_retries:
+                wait_seconds = attempt * 3
+                print(f"[Aviso Gemini API]: Erro temporário ({status_code}). Tentativa {attempt}/{max_retries}. Aguardando {wait_seconds}s...")
+                time.sleep(wait_seconds)
+                continue
+
+            print(f"[ERRO Gemini API]: Falha na requisição HTTP - {e}")
+            if hasattr(e, "response") and e.response is not None:
+                print(f"[Detalhes]: {e.response.text}")
+            return f"ERRO_REQUISICAO: {e}"
 
 
 def call_openrouter(prompt: str, model_name: str = "anthropic/claude-3.5-sonnet") -> str:

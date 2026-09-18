@@ -7,6 +7,7 @@ sys.path.append(str(Path(__file__).resolve().parent))
 
 from data_loader import load_itrust_dataset
 from api_clients import call_gemini
+from prompt_templates import get_zero_shot_prompt
 
 
 def run_pipeline(sample_size: int = 2):
@@ -42,14 +43,8 @@ def run_pipeline(sample_size: int = 2):
         test_text = row["test_text"]
         ground_truth = row["ground_truth"]
 
-        # Prompt Zero-shot adaptado para requisitos e classes/testes do iTrust
-        prompt = (
-            f"Você é um especialista em engenharia de software e recuperação de rastreabilidade (TLR).\n"
-            f"Dado o requisito de software (Caso de Uso):\n'''{req_text}'''\n\n"
-            f"E o seguinte caso de teste / código-fonte:\n'''{test_text}'''\n\n"
-            f"Eles possuem relação direta de rastreabilidade (o teste/código implementa ou valida o requisito)? "
-            f"Responda estritamente apenas 'SIM' ou 'NÃO'."
-        )
+        # Gera o prompt Zero-shot estruturado
+        prompt = get_zero_shot_prompt(req_text, test_text)
 
         print("-" * 60, flush=True)
         print(f"Par #{index + 1}: [{req_id}] <---> [{test_id}]", flush=True)
