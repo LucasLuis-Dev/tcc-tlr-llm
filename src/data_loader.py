@@ -164,6 +164,39 @@ def build_processed_dataset(
     return df
 
 
+def get_stratified_evaluation_dataset(random_state: int = 42) -> pd.DataFrame:
+    """
+    Retorna o DataFrame amostral fixo focado em testes eficientes (base oficial de testes):
+    - Seleciona todos os 286 pares positivos (ground_truth == 1).
+    - Seleciona aleatoriamente 572 pares negativos (ground_truth == 0) — proporção de 1:2.
+    - Junta e embaralha (shuffle) o subconjunto de 858 linhas.
+    
+    :param random_state: Semente para reproduzibilidade do embaralhamento e amostragem negativa.
+    :return: DataFrame com 858 linhas balanceadas na proporção 1:2.
+    """
+    if not PROCESSED_CSV_FILE.exists():
+        print(f"Arquivo processado não encontrado em {PROCESSED_CSV_FILE}. Construindo agora...")
+        df = build_processed_dataset()
+    else:
+        print(f"Carregando dataset processado de {PROCESSED_CSV_FILE}...")
+        df = pd.read_csv(PROCESSED_CSV_FILE)
+
+    pos_df = df[df["ground_truth"] == 1]
+    neg_df = df[df["ground_truth"] == 0]
+
+    n_pos = len(pos_df)
+    n_neg = min(len(neg_df), n_pos * 2)
+
+    sampled_neg = neg_df.sample(n=n_neg, random_state=random_state)
+    stratified_df = pd.concat([pos_df, sampled_neg]).sample(frac=1, random_state=random_state).reset_index(drop=True)
+
+    print(f"Base oficial de avaliação criada com {len(stratified_df)} pares:")
+    print(f"  - Pares positivos (1): {n_pos}")
+    print(f"  - Pares negativos (0): {n_neg} (proporção 1:2)")
+
+    return stratified_df
+
+
 def load_itrust_dataset(sample_size: Optional[int] = None, random_state: int = 42) -> pd.DataFrame:
     """
     Carrega o dataset consolidado do iTrust a partir de data/processed/itrust_processed.csv.

@@ -1,64 +1,107 @@
 import os
 import sys
 from pathlib import Path
+from typing import Optional
 
 # Adiciona o diretório 'src' ao sys.path para importações diretas
 sys.path.append(str(Path(__file__).resolve().parent))
 
-from data_loader import load_itrust_dataset
+from data_loader import get_stratified_evaluation_dataset
 from api_clients import call_gemini
 from prompt_templates import get_zero_shot_prompt
+from evaluate import calculate_metrics
 
 
-def run_pipeline(sample_size: int = 2):
+def parse_prediction(response_text: str) -> int:
     """
-    Executa o pipeline principal com o dataset real processado do iTrust e inferência Zero-shot via Gemini.
+    Normaliza e converte a resposta textual da IA em valor binário:
+    - 1 para SIM (existe elo de rastreabilidade)
+    - 0 para NÃO (não existe elo)
+    """
+    cleaned = response_text.strip().upper()
     
-    :param sample_size: Quantidade de pares para avaliar (padrão 2 para validação rápida e econômica da API).
-                        Defina como None para avaliar o dataset completo de 29.606 pares.
+    if "SIM" in cleaned and "NÃO" not in cleaned and "NAO" not in cleaned:
+        return 1
+    elif "NÃO" in cleaned or "NAO" in cleaned:
+        return 0
+    elif "YES" in cleaned:
+        return 1
+    elif "NO" in cleaned:
+        return 0
+    
+    # Fallback conservador para saídas ambíguas ou erros
+    return 0
+
+
+def run_pipeline(max_eval: Optional[int] = 10):
+    """
+    Executa o pipeline oficial de validação de TLR com o dataset estratificado (858 pares)
+    e computa as métricas clássicas (Precision, Recall, F1 e Matriz de Confusão).
+    
+    :param max_eval: Limite de pares para avaliação no loop.
+                     Padrão = 10 para testes rápidos e econômicos.
+                     Defina como None para rodar toda a base oficial de 858 pares.
     """
     print("=" * 70, flush=True)
-    print("  INICIANDO PIPELINE DE RASTREABILIDADE (TLR) - iTrust BENCHMARK", flush=True)
+    print("  INICIANDO PIPELINE DE AVALIAÇÃO (TLR) - iTrust BENCHMARK", flush=True)
     print("=" * 70, flush=True)
 
-    # 1. Carrega o dataset do iTrust (com amostragem balanceada para teste rápido)
-    df = load_itrust_dataset(sample_size=sample_size)
-    print(f"Total de pares selecionados para avaliação: {len(df)}", flush=True)
-    print(f"Pares com elo verdadeiro (1): {df['ground_truth'].sum()} | Sem elo (0): {(df['ground_truth'] == 0).sum()}\n", flush=True)
+    # 1. Carrega a base oficial de avaliação (858 pares: 286 positivos, 572 negativos)
+    df_eval = get_stratified_evaluation_dataset()
+    total_disponivel = len(df_eval)
 
-    # Verifica se a chave do Gemini está configurada no .env
+    # Aplica o limite se configurado
+    if max_eval is not None and max_eval < total_disponivel:
+        df_subset = df_eval.head(max_eval).copy()
+        print(f"\n[MODO TESTE RÁPIDO]: Avaliando as primeiras {max_eval} de {total_disponivel} instâncias.", flush=True)
+        print("Para avaliar toda a base oficial (858 instâncias), defina max_eval=None.\n", flush=True)
+    else:
+        df_subset = df_eval.copy()
+        print(f"\n[AVALIAÇÃO COMPLETA]: Executando todas as {total_disponivel} instâncias da base oficial.\n", flush=True)
+
+    # 2. Verifica se a chave da API está configurada
     gemini_key = os.getenv("GEMINI_API_KEY")
     if not gemini_key:
         print("[AVISO]: A variável GEMINI_API_KEY não está preenchida no arquivo .env.", flush=True)
-        print("Preencha sua chave no arquivo .env para executar chamadas reais à API do Gemini.\n", flush=True)
-        print("Prévia dos pares que serão avaliados:", flush=True)
-        print(df[["req_id", "test_id", "ground_truth"]].head(sample_size or 5), flush=True)
+        print("Configure a chave no arquivo .env para permitir as chamadas à API.\n", flush=True)
         return
 
-    # 2. Itera sobre cada par e executa a classificação Zero-shot
-    for index, row in df.iterrows():
+    # 3. Acumuladores de métricas
+    y_true = []
+    y_pred = []
+
+    # 4. Loop de inferência
+    for index, row in df_subset.iterrows():
         req_id = row["req_id"]
         req_text = row["req_text"]
         test_id = row["test_id"]
         test_text = row["test_text"]
-        ground_truth = row["ground_truth"]
+        ground_truth = int(row["ground_truth"])
 
-        # Gera o prompt Zero-shot estruturado
+        # Monta o prompt Zero-shot
         prompt = get_zero_shot_prompt(req_text, test_text)
 
         print("-" * 60, flush=True)
-        print(f"Par #{index + 1}: [{req_id}] <---> [{test_id}]", flush=True)
+        print(f"Par #{len(y_true) + 1}/{len(df_subset)}: [{req_id}] <---> [{test_id}]", flush=True)
         print(f"Ground Truth : {'1 (SIM - Elo Existe)' if ground_truth == 1 else '0 (NÃO - Sem Elo)'}", flush=True)
-        print("Enviando prompt para a API do Gemini...", flush=True)
+        print("Enviando requisição ao Gemini...", flush=True)
 
-        # 3. Chama a API do Gemini
         try:
-            prediction = call_gemini(prompt)
+            raw_response = call_gemini(prompt)
         except Exception as e:
-            prediction = f"ERRO: {e}"
+            raw_response = f"ERRO: {e}"
 
-        print(f"Resposta IA  : {prediction}", flush=True)
+        pred_bin = parse_prediction(raw_response)
+        
+        y_true.append(ground_truth)
+        y_pred.append(pred_bin)
+
+        print(f"Resposta IA  : {raw_response} -> [Predição: {pred_bin}]", flush=True)
+
+    # 5. Cálculo e exibição das métricas finais
+    calculate_metrics(y_true, y_pred)
 
 
 if __name__ == "__main__":
-    run_pipeline(sample_size=2)
+    # Executa com as primeiras 10 linhas da amostra estratificada para validação imediata
+    run_pipeline(max_eval=10)
