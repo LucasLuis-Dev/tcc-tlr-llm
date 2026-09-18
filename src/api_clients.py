@@ -9,19 +9,21 @@ GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 
 
-def call_gemini(prompt: str, model_name: str = "gemini-1.5-flash") -> str:
+def call_gemini(prompt: str, model_name: str = "gemini-3.6-flash") -> str:
     """
     Envia uma requisição para a API do Google Gemini (rota Google AI Studio).
     
     :param prompt: Texto do prompt a ser enviado.
-    :param model_name: Nome do modelo (padrão: gemini-1.5-flash).
+    :param model_name: Nome do modelo (padrão: gemini-3.6-flash).
     :return: Texto da resposta gerada pelo modelo.
     """
     api_key = os.getenv("GEMINI_API_KEY")
     if not api_key:
         raise ValueError("GEMINI_API_KEY não foi encontrada no arquivo .env.")
 
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={api_key}"
+    # Remove prefixo 'models/' caso seja passado acidentalmente
+    clean_model = model_name.replace("models/", "")
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/{clean_model}:generateContent?key={api_key}"
     headers = {
         "Content-Type": "application/json"
     }
@@ -36,7 +38,7 @@ def call_gemini(prompt: str, model_name: str = "gemini-1.5-flash") -> str:
     }
 
     try:
-        response = requests.post(url, headers=headers, json=payload, timeout=30)
+        response = requests.post(url, headers=headers, json=payload, timeout=60)
         response.raise_for_status()
         data = response.json()
         
@@ -89,7 +91,7 @@ def call_openrouter(prompt: str, model_name: str = "anthropic/claude-3.5-sonnet"
     }
 
     try:
-        response = requests.post(url, headers=headers, json=payload, timeout=30)
+        response = requests.post(url, headers=headers, json=payload, timeout=60)
         response.raise_for_status()
         data = response.json()
         
