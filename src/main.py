@@ -8,7 +8,7 @@ sys.path.append(str(Path(__file__).resolve().parent))
 
 from data_loader import get_stratified_evaluation_dataset
 from api_clients import call_gemini
-from prompt_templates import get_zero_shot_prompt
+from prompt_templates import get_few_shot_prompt
 from evaluate import calculate_metrics
 
 
@@ -78,8 +78,8 @@ def run_pipeline(max_eval: Optional[int] = 10):
         test_text = row["test_text"]
         ground_truth = int(row["ground_truth"])
 
-        # Monta o prompt Zero-shot
-        prompt = get_zero_shot_prompt(req_text, test_text)
+        # Monta o prompt Few-shot
+        prompt = get_few_shot_prompt(req_text, test_text)
 
         print("-" * 60, flush=True)
         print(f"Par #{len(y_true) + 1}/{len(df_subset)}: [{req_id}] <---> [{test_id}]", flush=True)
@@ -103,5 +103,5 @@ def run_pipeline(max_eval: Optional[int] = 10):
 
 
 if __name__ == "__main__":
-    # Executa com as primeiras 10 linhas da amostra estratificada para validação imediata
-    run_pipeline(max_eval=10)
+    # Executa o primeiro experimento com 50 pares da amostra estratificada
+    run_pipeline(max_eval=50)
