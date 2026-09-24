@@ -1,5 +1,6 @@
 import os
 import sys
+import time
 from pathlib import Path
 from typing import Optional, List, Dict, Any, Callable
 import pandas as pd
@@ -151,6 +152,9 @@ def evaluate_model_strategy(
         if len(preview_response) > 120:
             preview_response = preview_response[:100] + "... " + preview_response[-20:]
         print(f"Resposta IA  : {preview_response} -> [Predição: {pred_bin}]", flush=True)
+
+        # Pausa para respeitar limites de requisições por minuto (RPM)
+        time.sleep(0.5)
 
     # Cálculo e exibição das métricas desta combinação
     metrics = calculate_metrics(y_true, y_pred)
