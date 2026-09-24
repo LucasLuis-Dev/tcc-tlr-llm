@@ -2,5 +2,6 @@
 __pycache__/
 data/raw/
 data/processed/*.csv
+!data/processed/multimodel_prompt_results.csv
 .ipynb_checkpoints
 iTrust/

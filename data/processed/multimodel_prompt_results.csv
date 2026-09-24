@@ -1,0 +1,16 @@
+model,strategy,precision,recall,f1,tp,fp,tn,fn
+anthropic/claude-3.5-sonnet,Zero-Shot,1.0,0.6363636363636364,0.7777777777777778,7,0,39,4
+anthropic/claude-3.5-sonnet,Few-Shot,1.0,0.6363636363636364,0.7777777777777778,7,0,39,4
+anthropic/claude-3.5-sonnet,Chain-of-Thought (CoT),1.0,0.36363636363636365,0.5333333333333333,4,0,39,7
+openai/gpt-4o-mini,Zero-Shot,0.6666666666666666,0.36363636363636365,0.47058823529411764,4,2,37,7
+openai/gpt-4o-mini,Few-Shot,0.75,0.5454545454545454,0.631578947368421,6,2,37,5
+openai/gpt-4o-mini,Chain-of-Thought (CoT),0.9,0.8181818181818182,0.8571428571428571,9,1,38,2
+deepseek/deepseek-chat,Zero-Shot,1.0,0.09090909090909091,0.16666666666666666,1,0,39,10
+deepseek/deepseek-chat,Few-Shot,1.0,0.36363636363636365,0.5333333333333333,4,0,39,7
+deepseek/deepseek-chat,Chain-of-Thought (CoT),1.0,0.2727272727272727,0.42857142857142855,3,0,39,8
+perplexity/llama-3.1-sonar-large-128k-chat,Zero-Shot,1.0,0.45454545454545453,0.625,5,0,39,6
+perplexity/llama-3.1-sonar-large-128k-chat,Few-Shot,0.8888888888888888,0.7272727272727273,0.8,8,1,38,3
+perplexity/llama-3.1-sonar-large-128k-chat,Chain-of-Thought (CoT),1.0,0.36363636363636365,0.5333333333333333,4,0,39,7
+gemini-3.6-flash,Zero-Shot,0.0,0.0,0.0,0,0,39,11
+gemini-3.6-flash,Few-Shot,0.0,0.0,0.0,0,0,39,11
+gemini-3.6-flash,Chain-of-Thought (CoT),0.0,0.0,0.0,0,0,39,11
