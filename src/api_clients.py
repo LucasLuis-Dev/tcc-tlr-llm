@@ -73,7 +73,7 @@ def call_gemini(prompt: str, model_name: str = "gemini-3.6-flash") -> str:
 def call_openrouter(
     prompt: str,
     model_name: str = "openai/gpt-4o-mini",
-    max_tokens: int = 150,
+    max_tokens: int = 400,
     temperature: float = 0.0
 ) -> str:
     """
@@ -83,7 +83,7 @@ def call_openrouter(
     :param model_name: Identificador do modelo no OpenRouter (ex: 'openai/gpt-4o-mini',
                        'anthropic/claude-3.5-sonnet', 'deepseek/deepseek-chat',
                        'perplexity/llama-3.1-sonar-large-128k-chat').
-    :param max_tokens: Limite máximo de tokens de resposta (padrão: 150).
+    :param max_tokens: Limite máximo de tokens de resposta (padrão: 400 para permitir raciocínio CoT).
     :param temperature: Temperatura para controle de determinismo (padrão: 0.0).
     :return: Texto da resposta gerada pelo modelo.
     """

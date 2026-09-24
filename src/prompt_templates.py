@@ -52,3 +52,27 @@ Existe uma ligação direta e semântica entre o requisito e o teste abaixo? O t
 
 Responda APENAS com a palavra SIM ou NÃO."""
     return prompt
+
+
+def get_cot_prompt(req_text: str, test_text: str) -> str:
+    """
+    Retorna o template de prompt Chain-of-Thought (CoT).
+    Instrui o modelo a raciocinar passo a passo antes de emitir a decisão final,
+    concluindo com SIM ou NÃO na última linha.
+    """
+    prompt = f"""Você é um engenheiro de software sênior especialista em testes de software e validação de requisitos. 
+Avalie se há ligação de rastreabilidade (Traceability Link) entre o Requisito e o Caso de Teste abaixo.
+
+Passo 1: Analise os conceitos-chave e a funcionalidade esperada no requisito.
+Passo 2: Analise o objetivo, as asserções e os artefatos do código do caso de teste.
+Passo 3: Conclua se há validação direta entre o caso de teste e o requisito.
+
+[Requisito]:
+{req_text}
+
+[Caso de Teste]:
+{test_text}
+
+Explique brevemente o raciocínio e, na última linha, responda APENAS com a palavra SIM ou NÃO."""
+    return prompt
+
