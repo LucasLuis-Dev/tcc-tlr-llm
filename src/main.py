@@ -7,6 +7,14 @@ import pandas as pd
 # Adiciona o diretório 'src' ao sys.path para importações diretas
 sys.path.append(str(Path(__file__).resolve().parent))
 
+# Garante suporte adequado a UTF-8 no terminal Windows
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+        sys.stderr.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 from data_loader import get_stratified_evaluation_dataset
 from api_clients import call_openrouter, call_gemini
 from prompt_templates import get_few_shot_prompt
