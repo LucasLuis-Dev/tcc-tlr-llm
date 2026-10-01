@@ -187,9 +187,13 @@ def run_pipeline(
     if max_eval is not None and max_eval < total_disponivel:
         df_subset = df_eval.head(max_eval).copy()
         print(f"\n[AMOSTRA ESTRATIFICADA]: Avaliando as primeiras {max_eval} de {total_disponivel} instâncias.\n", flush=True)
+        out_csv = Path(__file__).resolve().parent.parent / "data" / "processed" / "multimodel_prompt_results.csv"
     else:
         df_subset = df_eval.copy()
         print(f"\n[AVALIAÇÃO COMPLETA]: Executando todas as {total_disponivel} instâncias.\n", flush=True)
+        out_csv = Path(__file__).resolve().parent.parent / "data" / "processed" / "multimodel_prompt_results_full.csv"
+
+    out_csv.parent.mkdir(parents=True, exist_ok=True)
 
     target_models = models if models is not None else DEFAULT_MODELS
     target_strategies = {
@@ -198,54 +202,54 @@ def run_pipeline(
         if name in PROMPT_STRATEGIES
     }
 
+    # Carrega progresso anterior para evitar reprocessamento
+    completed_combos = set()
+    if out_csv.exists():
+        try:
+            existing_df = pd.read_csv(out_csv)
+            for _, row in existing_df.iterrows():
+                completed_combos.add((row["model"], row["strategy"]))
+            print(f"\n[Retomando Progresso]: {len(completed_combos)} combinações já processadas encontradas em {out_csv.name}.\n", flush=True)
+        except Exception as e:
+            print(f"Erro ao ler CSV existente: {e}")
+
     results_summary: Dict[tuple, Dict[str, Any]] = {}
 
     # 2. Iteração cruzada: Modelo x Estratégia de Prompt
     for model_name in target_models:
         for strategy_name, prompt_func in target_strategies.items():
+            if (model_name, strategy_name) in completed_combos:
+                print(f"[{model_name} | {strategy_name}] Já avaliado anteriormente. Pulando...", flush=True)
+                continue
+
             metrics = evaluate_model_strategy(model_name, strategy_name, prompt_func, df_subset)
             results_summary[(model_name, strategy_name)] = metrics
+            
+            # Exporta progressivamente (Checkpoint)
+            new_record = pd.DataFrame([{
+                "model": model_name,
+                "strategy": strategy_name,
+                "precision": metrics["precision"],
+                "recall": metrics["recall"],
+                "f1": metrics["f1"],
+                "tp": metrics["confusion_matrix"]["tp"],
+                "fp": metrics["confusion_matrix"]["fp"],
+                "tn": metrics["confusion_matrix"]["tn"],
+                "fn": metrics["confusion_matrix"]["fn"]
+            }])
+            
+            if not out_csv.exists() or out_csv.stat().st_size == 0:
+                new_record.to_csv(out_csv, index=False, encoding="utf-8")
+            else:
+                new_record.to_csv(out_csv, mode="a", header=False, index=False, encoding="utf-8")
+                
+            print(f"[Checkpoint] Salvo resultado para {model_name} - {strategy_name}\n", flush=True)
 
-    # 3. Exibição do quadro comparativo final consolidado agrupado por modelo e estratégia
-    print("\n" + "=" * 95)
-    print("       QUADRO COMPARATIVO CONSOLIDADO (MODELO X ESTRATÉGIA DE PROMPT)")
-    print("=" * 95)
-    print(f"{'Modelo':<35} | {'Estratégia':<22} | {'Precisão':<10} | {'Recall':<10} | {'F1-Score':<10}")
-    print("-" * 95)
-    for (model, strategy), m in results_summary.items():
-        p = m["precision"]
-        r = m["recall"]
-        f1 = m["f1"]
-        print(f"{model:<35} | {strategy:<22} | {p * 100:>8.2f}% | {r * 100:>8.2f}% | {f1 * 100:>8.2f}%")
-    print("=" * 95 + "\n")
-
-    # 4. Exportação dos resultados consolidados para arquivo CSV
-    records = []
-    for (model, strategy), m in results_summary.items():
-        records.append({
-            "model": model,
-            "strategy": strategy,
-            "precision": m["precision"],
-            "recall": m["recall"],
-            "f1": m["f1"],
-            "tp": m["confusion_matrix"]["tp"],
-            "fp": m["confusion_matrix"]["fp"],
-            "tn": m["confusion_matrix"]["tn"],
-            "fn": m["confusion_matrix"]["fn"]
-        })
-
-    if records:
-        df_res = pd.DataFrame(records)
-        out_csv = Path(__file__).resolve().parent.parent / "data" / "processed" / "multimodel_prompt_results.csv"
-        out_csv.parent.mkdir(parents=True, exist_ok=True)
-        df_res.to_csv(out_csv, index=False, encoding="utf-8")
-        print(f"[Arquivo salvo]: Tabela de métricas exportada para: {out_csv}\n")
-
+    print("\n[Execução Finalizada] Todos os modelos e estratégias foram processados.\n")
     return results_summary
 
 
 if __name__ == "__main__":
-    # Executa a homologação multimodelo e multiestratégia com 50 pares
-    run_pipeline(max_eval=50)
-
+    # Executa a avaliação completa (858 pares) com todos os modelos e estratégias
+    run_pipeline(max_eval=None)
 

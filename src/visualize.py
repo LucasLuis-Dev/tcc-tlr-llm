@@ -10,7 +10,7 @@ sys.path.append(str(Path(__file__).resolve().parent))
 
 # Diretórios de entrada e saída
 BASE_DIR = Path(__file__).resolve().parent.parent
-CSV_PATH = BASE_DIR / "data" / "processed" / "multimodel_prompt_results.csv"
+CSV_PATH = BASE_DIR / "data" / "processed" / "multimodel_prompt_results_full.csv"
 OUTPUT_DIR = BASE_DIR / "results" / "figures"
 
 # Mapeamento de nomes oficiais dos modelos para rótulos legíveis
@@ -130,13 +130,14 @@ def plot_precision_vs_recall(df: pd.DataFrame, output_dir: Path):
     sns.set_theme(style="whitegrid")
 
     # Filtra modelos com valores de predição válidos para destaque
-    df_valid = df[df["model_clean"] != "Gemini 3.6 Flash"].copy()
+    df_valid = df.copy()
 
     model_colors = {
         "Claude 3.5 Sonnet": "#1f77b4",
         "GPT-4o-mini": "#2ca02c",
         "DeepSeek-Chat": "#ff7f0e",
-        "Perplexity Sonar": "#9467bd"
+        "Perplexity Sonar": "#9467bd",
+        "Gemini 3.6 Flash": "#d62728"
     }
 
     markers = {
@@ -162,9 +163,9 @@ def plot_precision_vs_recall(df: pd.DataFrame, output_dir: Path):
 
     # Anotações para pontos-chave de interesse científico
     annotations = [
-        ("GPT-4o-mini\n(CoT: 81.8% Rec, 90% Prec)", "GPT-4o-mini", "Chain-of-Thought (CoT)", (-65, -25)),
-        ("Perplexity\n(Few-Shot: 72.7% Rec)", "Perplexity Sonar", "Few-Shot", (-75, 10)),
-        ("Claude 3.5 Sonnet\n(Zero/Few: 100% Prec)", "Claude 3.5 Sonnet", "Few-Shot", (-110, -25)),
+        ("GPT-4o-mini (CoT)", "GPT-4o-mini", "Chain-of-Thought (CoT)", (-65, -25)),
+        ("Perplexity (Few-Shot)", "Perplexity Sonar", "Few-Shot", (-75, 10)),
+        ("Claude 3.5 Sonnet (Few-Shot)", "Claude 3.5 Sonnet", "Few-Shot", (-110, -25)),
     ]
 
     for label, model_name, strategy_name, offset in annotations:
