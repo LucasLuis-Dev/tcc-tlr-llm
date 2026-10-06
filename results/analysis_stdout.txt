@@ -1,0 +1,140 @@
+﻿Carregando dataset processado de C:\Users\Lucas Luis\Documents\tcc-tlr-llm\data\processed\itrust_processed.csv...
+Base oficial de avalia├º├úo criada com 858 pares:
+  - Pares positivos (1): 286
+  - Pares negativos (0): 572 (propor├º├úo 1:2)
+              Modelo Estrat├®gia   VP  FP   VN   FN  Precis├úo  Revoca├º├úo      F1      F2  F1_IC_inf  F1_IC_sup  Pares_com_erro_API
+0    Claude Sonnet 4  Zero-shot   66   4  568  220    0.9429     0.2308  0.3708  0.2718     0.3051     0.4336                   0
+1    Claude Sonnet 4   Few-shot  105   4  568  181    0.9633     0.3671  0.5316  0.4190     0.4697     0.5888                   0
+2    Claude Sonnet 4        CoT   44   2  570  242    0.9565     0.1538  0.2651  0.1849     0.2006     0.3265                 184
+3        GPT-4o-mini  Zero-shot  132  14  558  154    0.9041     0.4615  0.6111  0.5116     0.5550     0.6622                   0
+4        GPT-4o-mini   Few-shot  156  13  559  130    0.9231     0.5455  0.6857  0.5941     0.6345     0.7323                   0
+5        GPT-4o-mini        CoT  152  20  552  134    0.8837     0.5315  0.6638  0.5775     0.6116     0.7110                   0
+6        DeepSeek V3  Zero-shot   26   0  572  260    1.0000     0.0909  0.1667  0.1111     0.1111     0.2242                   0
+7        DeepSeek V3   Few-shot   67   1  571  219    0.9853     0.2343  0.3785  0.2764     0.3118     0.4415                   0
+8        DeepSeek V3        CoT   68   2  570  218    0.9714     0.2378  0.3820  0.2801     0.3172     0.4438                   0
+9   Perplexity Sonar  Zero-shot   68   5  567  218    0.9315     0.2378  0.3788  0.2794     0.3144     0.4415                   0
+10  Perplexity Sonar   Few-shot   41   8  564  245    0.8367     0.1434  0.2448  0.1718     0.1818     0.3040                 622
+11  Perplexity Sonar        CoT   52   2  570  234    0.9630     0.1818  0.3059  0.2170     0.2395     0.3679                   0
+12      Gemini Flash  Zero-shot   58   1  571  228    0.9831     0.2028  0.3362  0.2411     0.2717     0.3977                   0
+13      Gemini Flash   Few-shot   94   1  571  192    0.9895     0.3287  0.4934  0.3793     0.4294     0.5522                  25
+14      Gemini Flash        CoT   41   3  569  245    0.9318     0.1434  0.2485  0.1726     0.1845     0.3077                   0
+Total de requisitos carregados: 131
+Total de casos de teste/classes carregados: 226
+Total de elos v├ílidos (ground truth = 1): 286
+
+=== BASELINES ===
+                                         0       1                 2
+M├®todo                    TF-IDF (cosseno)    BM25  LSI (SVD, k=100)
+CV_VP                                  211     215               186
+CV_FP                                  129     124                63
+CV_VN                                  443     448               509
+CV_FN                                   75      71               100
+CV_Precis├úo                         0.6206  0.6342             0.747
+CV_Revoca├º├úo                        0.7378  0.7517            0.6503
+CV_F1                               0.6741   0.688            0.6953
+CV_F2                               0.7109  0.7249            0.6676
+CV_F1_IC_inf                        0.6303  0.6443            0.6492
+CV_F1_IC_sup                        0.7152  0.7283            0.7387
+├ôtimo858_VP                            205     229               187
+├ôtimo858_FP                             98     126                63
+├ôtimo858_VN                            474     446               509
+├ôtimo858_FN                             81      57                99
+├ôtimo858_Precis├úo                   0.6766  0.6451             0.748
+├ôtimo858_Revoca├º├úo                  0.7168  0.8007            0.6538
+├ôtimo858_F1                         0.6961  0.7145            0.6978
+Full_limiar858_VP                      205     229               187
+Full_limiar858_FP                     4795    6754              3276
+Full_limiar858_Precis├úo              0.041  0.0328             0.054
+Full_limiar858_Revoca├º├úo            0.7168  0.8007            0.6538
+Full_limiar858_F1                   0.0776   0.063            0.0998
+Full_F1_├│timo                       0.2371  0.2381            0.2487
+Full_AP                              0.122  0.1136            0.1264
+Full_pares                           29606   29606             29606
+Full_positivos                         286     286               286
+
+=== TESTES PAREADOS ===
+                                                  Compara├º├úo  F1_ref  F1_outro     ╬öF1  ╬öF1_IC_inf  ╬öF1_IC_sup  Prop_boot_╬öF1<=0  McNemar_b(ref acerta, outro erra)  McNemar_c(ref erra, outro acerta)  p_McNemar  p_Holm  Significativo_5%
+0    GPT-4o-mini / Few-shot  vs  Claude Sonnet 4 / Zero-shot  0.6857    0.3708  0.3149      0.2479      0.3833            0.0000                                102                                 21     0.0000  0.0000              True
+1     GPT-4o-mini / Few-shot  vs  Claude Sonnet 4 / Few-shot  0.6857    0.5316  0.1541      0.0981      0.2116            0.0000                                 68                                 26     0.0000  0.0001              True
+2          GPT-4o-mini / Few-shot  vs  Claude Sonnet 4 / CoT  0.6857    0.2651  0.4207      0.3510      0.4887            0.0000                                119                                 18     0.0000  0.0000              True
+3        GPT-4o-mini / Few-shot  vs  GPT-4o-mini / Zero-shot  0.6857    0.6111  0.0746      0.0356      0.1167            0.0002                                 39                                 14     0.0008  0.0024              True
+4              GPT-4o-mini / Few-shot  vs  GPT-4o-mini / CoT  0.6857    0.6638  0.0220     -0.0242      0.0694            0.1755                                 45                                 34     0.2604  0.2604             False
+5        GPT-4o-mini / Few-shot  vs  DeepSeek V3 / Zero-shot  0.6857    0.1667  0.5190      0.4553      0.5807            0.0000                                130                                 13     0.0000  0.0000              True
+6         GPT-4o-mini / Few-shot  vs  DeepSeek V3 / Few-shot  0.6857    0.3785  0.3072      0.2506      0.3681            0.0000                                 89                                 12     0.0000  0.0000              True
+7              GPT-4o-mini / Few-shot  vs  DeepSeek V3 / CoT  0.6857    0.3820  0.3037      0.2391      0.3714            0.0000                                 99                                 22     0.0000  0.0000              True
+8   GPT-4o-mini / Few-shot  vs  Perplexity Sonar / Zero-shot  0.6857    0.3788  0.3069      0.2394      0.3744            0.0000                                105                                 25     0.0000  0.0000              True
+9    GPT-4o-mini / Few-shot  vs  Perplexity Sonar / Few-shot  0.6857    0.2448  0.4409      0.3685      0.5135            0.0000                                135                                 25     0.0000  0.0000              True
+10        GPT-4o-mini / Few-shot  vs  Perplexity Sonar / CoT  0.6857    0.3059  0.3798      0.3120      0.4490            0.0000                                112                                 19     0.0000  0.0000              True
+11      GPT-4o-mini / Few-shot  vs  Gemini Flash / Zero-shot  0.6857    0.3362  0.3495      0.2834      0.4160            0.0000                                105                                 19     0.0000  0.0000              True
+12       GPT-4o-mini / Few-shot  vs  Gemini Flash / Few-shot  0.6857    0.4934  0.1923      0.1294      0.2554            0.0000                                 80                                 30     0.0000  0.0000              True
+13            GPT-4o-mini / Few-shot  vs  Gemini Flash / CoT  0.6857    0.2485  0.4372      0.3679      0.5069            0.0000                                122                                 17     0.0000  0.0000              True
+14    GPT-4o-mini / Few-shot  vs  Baseline: TF-IDF (cosseno)  0.6857    0.6741  0.0116     -0.0378      0.0608            0.3266                                126                                 65     0.0000  0.0001              True
+15                GPT-4o-mini / Few-shot  vs  Baseline: BM25  0.6857    0.6880 -0.0023     -0.0546      0.0500            0.5306                                130                                 78     0.0004  0.0015              True
+16    GPT-4o-mini / Few-shot  vs  Baseline: LSI (SVD, k=100)  0.6857    0.6953 -0.0096     -0.0559      0.0364            0.6602                                 71                                 51     0.0850  0.1700             False
+
+=== SENSIBILIDADE (F1 projetado) ===
+Propor├º├úo_pos:neg                   1:10  1:102.5    1:2    1:5   1:50
+Modelo           Estrat├®gia                                           
+Baseline         BM25              0.384    0.063  0.688  0.530  0.119
+                 LSI (SVD, k=100)  0.473    0.101  0.695  0.591  0.182
+                 TF-IDF (cosseno)  0.370    0.059  0.674  0.515  0.113
+Claude Sonnet 4  CoT               0.259    0.203  0.265  0.263  0.232
+                 Few-shot          0.511    0.352  0.532  0.524  0.428
+                 Zero-shot         0.355    0.237  0.371  0.365  0.292
+DeepSeek V3      CoT               0.374    0.298  0.382  0.379  0.337
+                 Few-shot          0.374    0.331  0.379  0.377  0.354
+                 Zero-shot         0.167    0.167  0.167  0.167  0.167
+GPT-4o-mini      CoT               0.565    0.208  0.664  0.623  0.324
+                 Few-shot          0.615    0.282  0.686  0.658  0.407
+                 Zero-shot         0.541    0.232  0.611  0.583  0.344
+Gemini Flash     CoT               0.240    0.171  0.248  0.245  0.204
+                 Few-shot          0.488    0.436  0.493  0.492  0.464
+                 Zero-shot         0.332    0.293  0.336  0.335  0.314
+Perplexity Sonar CoT               0.299    0.236  0.306  0.303  0.268
+                 Few-shot          0.223    0.111  0.245  0.236  0.156
+                 Zero-shot         0.359    0.223  0.379  0.371  0.284
+             Modelo Estrat├®gia Propor├º├úo_pos:neg  Prec_IC_inf  Prec_IC_sup  F1_IC_inf  F1_IC_sup
+0       GPT-4o-mini   Few-shot               1:2        0.882        0.961      0.635      0.733
+1       GPT-4o-mini   Few-shot               1:5        0.752        0.906      0.604      0.709
+2       GPT-4o-mini   Few-shot              1:10        0.600        0.828      0.554      0.677
+3       GPT-4o-mini   Few-shot              1:50        0.230        0.493      0.320      0.525
+4       GPT-4o-mini   Few-shot           1:102.5        0.128        0.323      0.205      0.408
+5       GPT-4o-mini        CoT               1:2        0.838        0.928      0.613      0.712
+6       GPT-4o-mini        CoT               1:5        0.673        0.836      0.570      0.676
+7       GPT-4o-mini        CoT              1:10        0.508        0.721      0.503      0.629
+8       GPT-4o-mini        CoT              1:50        0.170        0.341      0.255      0.421
+9       GPT-4o-mini        CoT           1:102.5        0.091        0.201      0.154      0.294
+10      GPT-4o-mini  Zero-shot               1:2        0.857        0.949      0.556      0.665
+11      GPT-4o-mini  Zero-shot               1:5        0.703        0.881      0.525      0.637
+12      GPT-4o-mini  Zero-shot              1:10        0.543        0.786      0.478      0.605
+13      GPT-4o-mini  Zero-shot              1:50        0.191        0.426      0.267      0.450
+14      GPT-4o-mini  Zero-shot           1:102.5        0.104        0.270      0.168      0.345
+15  Claude Sonnet 4   Few-shot               1:2        0.925        0.991      0.470      0.590
+16  Claude Sonnet 4   Few-shot               1:5        0.829        0.979      0.461      0.580
+17  Claude Sonnet 4   Few-shot              1:10        0.710        0.958      0.447      0.573
+18  Claude Sonnet 4   Few-shot              1:50        0.330        0.820      0.336      0.530
+19  Claude Sonnet 4   Few-shot           1:102.5        0.194        0.694      0.250      0.505
+20     Gemini Flash   Few-shot               1:2        0.966        1.000      0.432      0.554
+21     Gemini Flash   Few-shot               1:5        0.918        1.000      0.428      0.552
+22     Gemini Flash   Few-shot              1:10        0.848        1.000      0.426      0.549
+23     Gemini Flash   Few-shot              1:50        0.528        1.000      0.385      0.541
+24     Gemini Flash   Few-shot           1:102.5        0.348        1.000      0.327      0.541
+
+=== TOKENS DE ENTRADA ESTIMADOS ===
+  Estrat├®gia  Tokens_entrada_est_total_por_modelo  Tokens_entrada_est_m├®dio_por_par  Tokens_entrada_est_mediana  Tokens_entrada_est_p95
+0  Zero-shot                              1224661                            1427.3                       871.2                  3995.8
+1   Few-shot                              1357436                            1582.1                      1026.0                  4150.5
+2        CoT                              1253618                            1461.1                       905.0                  4029.5
+
+=== CUSTO ===
+             Modelo  Requisi├º├Áes_previstas  Tokens_entrada_estimados  Custo_faturado_USD  Custo_m├®dio_por_requisi├º├úo_USD  Custo_por_1000_pares_USD  Pares_com_erro_API Melhor_estrat├®gia  Melhor_F1  F1_por_USD
+0   Claude Sonnet 4                   2574                   3835715               17.91                          0.0070                    6.9580                 184          Few-shot     0.5316      0.0297
+1       GPT-4o-mini                   2574                   3835715                0.72                          0.0003                    0.2797                   0          Few-shot     0.6857      0.9524
+2       DeepSeek V3                   2574                   3835715                1.45                          0.0006                    0.5633                   0               CoT     0.3820      0.2635
+3  Perplexity Sonar                   2574                   3835715               12.94                          0.0050                    5.0272                 622         Zero-shot     0.3788      0.0293
+4      Gemini Flash                   2574                   3835715                0.00                          0.0000                    0.0000                  25          Few-shot     0.4934         NaN
+
+Positivos nunca encontrados por nenhuma das 15 combina├º├Áes: 82
+Positivos encontrados por pelo menos 1 combina├º├úo: 204
+Positivos encontrados por todas as 15: 0
+Revoca├º├úo da uni├úo (OR) das 15 combina├º├Áes: 0.7132867132867133

@@ -1,0 +1,421 @@
+﻿Total de requisitos carregados: 131
+Total de casos de teste/classes carregados: 226
+Total de elos v├ílidos (ground truth = 1): 286
+Total de requisitos carregados: 131
+Total de casos de teste/classes carregados: 226
+=== Configura├º├úo de refer├¬ncia: ('GPT-4o-mini', 'Few-shot') ===
+FP: 13 FN: 130 TP: 156 TN: 559
+
+FP (ref):
+      pair_id      req_id                                 test_id tipo_classe  tfidf  jaccard  req_chars  code_chars  links_do_req  links_da_classe
+8591       12  UC40S2.txt              ViewVisitedHCPsAction.java      Action  0.045    0.036       1223        7356             0                3
+8608       29  UC40S4.txt              EditOfficeVisitAction.java      Action  0.034    0.023        447       15022             0                5
+8968      389  UC34S2.txt                   ReportRequestDAO.java         DAO  0.116    0.048        319        8335             2                4
+9043      464    UC13.txt                   DeclareHCPAction.java      Action  0.053    0.029        125        2968             3                1
+9096      517   UC1E1.txt  RemoteMonitoringDataBeanValidator.java   Validator  0.110    0.062        184        1492             1                2
+9148      569   UC5S2.txt            UpdateICDCodeListAction.java      Action  0.074    0.046        288        3147             1                1
+9181      602  UC23S3.txt                      PatientLoader.java      Loader  0.078    0.057        699        5148             9                0
+9319      740   UC5S2.txt           ChronicDiseaseRiskAction.java      Action  0.134    0.099        288        2776             1                1
+9321      742  UC10S1.txt          HealthRecordFormValidator.java   Validator  0.171    0.080        658        1732             7                0
+9336      757  UC40S7.txt                    LabProcedureDAO.java         DAO  0.250    0.106        396       11403             0                8
+9356      777  UC40S2.txt           PrescriptionReportAction.java      Action  0.097    0.052       1223        6484             0                0
+9372      793   UC9S2.txt                     OfficeVisitDAO.java         DAO  0.072    0.047        808       23427             2               10
+9373      794    UC25.txt              ViewVisitedHCPsAction.java      Action  0.097    0.068        788        7356             3                3
+
+--- M├®dias (TP vs FN, ref) ---
+TP tfidf=0.188 jaccard=0.075 code_chars(med)=6923 req_chars(med)=408 links_req(med)=3.0 links_cls(med)=3.0
+FN tfidf=0.064 jaccard=0.034 code_chars(med)=8335 req_chars(med)=205 links_req(med)=3.0 links_cls(med)=13.0
+FP tfidf=0.102 jaccard=0.058 code_chars(med)=6484 req_chars(med)=447 links_req(med)=1.0 links_cls(med)=2.0
+TN tfidf=0.028 jaccard=0.023 code_chars(med)=1966 req_chars(med)=254 links_req(med)=2.0 links_cls(med)=0.0
+
+--- Revoca├º├úo por tipo de classe (ref) ---
+                positivos  encontrados  revoca├º├úo
+tipo_classe                                      
+DAO                   146           72      0.493
+Action                109           73      0.670
+Outras                 15            2      0.133
+Validator              13            6      0.462
+Fator de risco          3            3      1.000
+
+--- Revoca├º├úo por quartil de tamanho da classe (ref) ---
+              n    rev  med_chars
+q_code                           
+Q1 (menor)   72  0.306     1186.5
+Q2           71  0.859     4211.0
+Q3          101  0.455    11403.0
+Q4 (maior)   42  0.643    24366.0
+
+--- Revoca├º├úo por quartil de similaridade lexical (TF-IDF) (ref) ---
+                          n    rev  med_tfidf
+q_tfidf                                      
+Q1 (menor sobreposi├º├úo)  72  0.111      0.023
+Q2                       71  0.380      0.076
+Q3                       71  0.789      0.152
+Q4 (maior)               72  0.903      0.269
+
+--- Revoca├º├úo por n┬║ de classes ligadas ao requisito (ref) ---
+                 n    rev
+req_links_grp            
+1               15  0.733
+2               84  0.560
+3-4            128  0.453
+5+              59  0.678
+
+--- Revoca├º├úo por tipo de artefato de requisito (ref) ---
+                        n    rev
+req_suffix                      
+E                      49  0.224
+S                     214  0.598
+UC (fluxo principal)   23  0.739
+
+--- Fatores associados aos FN (ref, n=130) ---
+                                                      fator  n_FN  % dos FN
+0         Baixa similaridade lexical (1┬║ quartil de TF-IDF)    64     0.492
+1                    C├│digo extenso (4┬║ quartil de tamanho)    43     0.331
+2      Implementa├º├úo distribu├¡da (requisito com 3+ classes)    89     0.685
+3  Classe de apoio (Bean/Loader/Validator/Exception/outras)    20     0.154
+4             Classe compartilhada (ligada a 5+ requisitos)   105     0.808
+FN com nenhum dos fatores: 1
+q_low tfidf = 0.0472 | big code chars = 13790
+
+--- FPs mais recorrentes (de 15 combina├º├Áes) ---
+        req_id                                 test_id  n_configs                                                       configs
+1   UC10S1.txt          HealthRecordFormValidator.java          8                    Claude Sonnet 4, GPT-4o-mini, Gemini Flash
+34   UC5S2.txt           ChronicDiseaseRiskAction.java          8  Claude Sonnet 4, GPT-4o-mini, Gemini Flash, Perplexity Sonar
+35   UC5S2.txt            UpdateICDCodeListAction.java          7                     Claude Sonnet 4, DeepSeek V3, GPT-4o-mini
+11   UC1E1.txt  RemoteMonitoringDataBeanValidator.java          6       Claude Sonnet 4, DeepSeek V3, GPT-4o-mini, Gemini Flash
+7   UC18S1.txt           EditOfficeVisitValidator.java          3                                  Claude Sonnet 4, GPT-4o-mini
+4     UC13.txt                   DeclareHCPAction.java          3                                                   GPT-4o-mini
+37   UC9S2.txt                     OfficeVisitDAO.java          3                                                   GPT-4o-mini
+21   UC2S1.txt           UpdateHospitalListAction.java          3                                 GPT-4o-mini, Perplexity Sonar
+29  UC40S2.txt           PrescriptionReportAction.java          3                                                   GPT-4o-mini
+17    UC25.txt              ViewVisitedHCPsAction.java          2                                                   GPT-4o-mini
+31  UC40S4.txt              EditOfficeVisitAction.java          2                                                   GPT-4o-mini
+3   UC11S1.txt                   PatientVisitBean.java          2                                              Perplexity Sonar
+Total de pares negativos que viraram FP em alguma combina├º├úo: 39
+FPs por tipo de classe (todas combina├º├Áes):
+test_id
+Action       39
+Validator    18
+DAO           9
+Outras        5
+Bean          5
+Loader        3
+Exception     1
+
+--- Padr├Áes por modelo ---
+              Modelo Estrat├®gia  Pares_preditos_SIM  Taxa_SIM  FP   FN  Erros_API
+0    Claude Sonnet 4  Zero-shot                  70     0.082   4  220          0
+1    Claude Sonnet 4   Few-shot                 109     0.127   4  181          0
+2    Claude Sonnet 4        CoT                  46     0.054   2  242        184
+3        GPT-4o-mini  Zero-shot                 146     0.170  14  154          0
+4        GPT-4o-mini   Few-shot                 169     0.197  13  130          0
+5        GPT-4o-mini        CoT                 172     0.200  20  134          0
+6        DeepSeek V3  Zero-shot                  26     0.030   0  260          0
+7        DeepSeek V3   Few-shot                  68     0.079   1  219          0
+8        DeepSeek V3        CoT                  70     0.082   2  218          0
+9   Perplexity Sonar  Zero-shot                  73     0.085   5  218          0
+10  Perplexity Sonar   Few-shot                  49     0.057   8  245        622
+11  Perplexity Sonar        CoT                  54     0.063   2  234          0
+12      Gemini Flash  Zero-shot                  59     0.069   1  228          0
+13      Gemini Flash   Few-shot                  95     0.111   1  192         25
+14      Gemini Flash        CoT                  44     0.051   3  245          0
+
+--- Classes com mais FN (ref) ---
+test_id
+AuthDAO.java              28
+GetUserNameAction.java    21
+EmailUtil.java            13
+PatientDAO.java           13
+PersonnelDAO.java         11
+AllergyDAO.java            4
+LabProcedureDAO.java       3
+AdverseEventDAO.java       3
+Elos positivos nas 4 classes mais ligadas: 90 | FN nelas: 75
+
+--- Revoca├º├úo por segmento (todas as combina├º├Áes) ---
+              Modelo Estrat├®gia  Rev_classes_hub(5+ reqs)  n_hub  Rev_classes_n├úo_hub  n_n├úo_hub  Rev_req_E  n_E  Rev_req_S  n_S
+2    Claude Sonnet 4  Zero-shot                     0.152    171                0.348        115      0.245   49      0.220  214
+1    Claude Sonnet 4   Few-shot                     0.222    171                0.583        115      0.286   49      0.369  214
+0    Claude Sonnet 4        CoT                     0.082    171                0.261        115      0.102   49      0.168  214
+8        GPT-4o-mini  Zero-shot                     0.287    171                0.722        115      0.204   49      0.486  214
+7        GPT-4o-mini   Few-shot                     0.386    171                0.783        115      0.224   49      0.598  214
+6        GPT-4o-mini        CoT                     0.363    171                0.783        115      0.327   49      0.570  214
+5        DeepSeek V3  Zero-shot                     0.023    171                0.191        115      0.020   49      0.089  214
+4        DeepSeek V3   Few-shot                     0.088    171                0.452        115      0.082   49      0.238  214
+3        DeepSeek V3        CoT                     0.111    171                0.426        115      0.265   49      0.220  214
+14  Perplexity Sonar  Zero-shot                     0.140    171                0.383        115      0.163   49      0.238  214
+13  Perplexity Sonar   Few-shot                     0.105    171                0.200        115      0.184   49      0.131  214
+12  Perplexity Sonar        CoT                     0.088    171                0.322        115      0.204   49      0.159  214
+11      Gemini Flash  Zero-shot                     0.053    171                0.426        115      0.184   49      0.196  214
+10      Gemini Flash   Few-shot                     0.135    171                0.617        115      0.245   49      0.318  214
+9       Gemini Flash        CoT                     0.047    171                0.287        115      0.082   49      0.140  214
+
+--- Ganho Zero-shot -> Few-shot (F1 e Revoca├º├úo) ---
+                  ╬öF1 FS-ZS  ╬öF1 CoT-ZS  ╬öRev FS-ZS
+Modelo                                             
+Claude Sonnet 4       0.161      -0.106       0.136
+DeepSeek V3           0.212       0.215       0.143
+GPT-4o-mini           0.075       0.053       0.084
+Gemini Flash          0.157      -0.088       0.126
+Perplexity Sonar     -0.134      -0.073      -0.094
+
+=========== INSPE├ç├âO MANUAL: FPs da refer├¬ncia ===========
+
+[REQ UC40S2.txt]
+A user (a patient) chooses to display his/her appointments in the current month together with his/her office visit dates, prescription dates, and lab procedure dates of the current month on a calendar for the current month. His/her appointments shall be displayed on the calendar [S3]. The user can select an appointment from the calendar to read the appointment's details [S4]. In the calendar, the date entry with an office visit shall display a label as the diagnoses (i.e., ICD-9CM codes) for the
+[CLASSE ViewVisitedHCPsAction.java] (7356 chars)
+package edu.ncsu.csc.itrust.action;
+
+import java.util.List;
+import java.util.ArrayList;
+import edu.ncsu.csc.itrust.beans.PersonnelBean;
+import edu.ncsu.csc.itrust.beans.OfficeVisitBean;
+import edu.ncsu.csc.itrust.beans.HCPVisitBean;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.dao.mysql.PatientDAO;
+import edu.ncsu.csc.itrust.dao.mysql.PersonnelDAO;
+import edu.ncsu.csc.itrust.dao.mysql.OfficeVisitDAO;
+import edu.ncsu.csc.itrust.exception.DBException;
+import edu.ncsu.csc.i
+
+
+[REQ UC40S4.txt]
+The user selects an appointment from the calendar to read its details by clicking the Read Details link beside or below the appointment type name displayed for the appointment, and then the details for the appointment shall be displayed in a new page, including the appointment type, the appointment date and start time, comment, and the name of either the patient (only for the user being an LHCP) or the LHCP (only for the user being a patient).
+[CLASSE EditOfficeVisitAction.java] (15022 chars)
+package edu.ncsu.csc.itrust.action;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+import edu.ncsu.csc.itrust.action.base.OfficeVisitBaseAction;
+import edu.ncsu.csc.itrust.beans.Email;
+import edu.ncsu.csc.itrust.beans.HospitalBean;
+import edu.ncsu.csc.itrust.beans.LabProcedureBean;
+import edu.ncsu.csc.itrust.beans.MedicationBean;
+import edu.ncsu.csc.itrust.beans.OfficeVisitBean;
+import edu.ncsu.csc.itrus
+
+
+[REQ UC34S2.txt]
+A patient whose at least one physiologic data type is specified to be under monitoring chooses to report their physiologic data. He or she can report his or her blood pressure (systolic and diastolic) [E2] and/or glucose levels [E3]. The input data, a timestamp, and the fact that the status is self-reported are saved.
+[CLASSE ReportRequestDAO.java] (8335 chars)
+package edu.ncsu.csc.itrust.dao.mysql;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.List;
+import edu.ncsu.csc.itrust.DBUtil;
+import edu.ncsu.csc.itrust.beans.ReportRequestBean;
+import edu.ncsu.csc.itrust.beans.loaders.ReportRequestBeanLoader;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.exception.DBException;
+
+/**
+ * Used for handling data related to report
+
+
+[REQ UC13.txt]
+A patient's DLHCP chooses to add or delete a patient's [E1, E2] personal representative by typing that person's MID [E1, E2].
+[CLASSE DeclareHCPAction.java] (2968 chars)
+package edu.ncsu.csc.itrust.action;
+
+import java.util.List;
+import edu.ncsu.csc.itrust.beans.PersonnelBean;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.dao.mysql.AuthDAO;
+import edu.ncsu.csc.itrust.dao.mysql.PatientDAO;
+import edu.ncsu.csc.itrust.dao.mysql.TransactionDAO;
+import edu.ncsu.csc.itrust.enums.Role;
+import edu.ncsu.csc.itrust.enums.TransactionType;
+import edu.ncsu.csc.itrust.exception.iTrustException;
+
+/**
+ * Used by the patient to declare HCPs as "designated
+
+
+[REQ UC1E1.txt]
+The system prompts the enterer/editor to correct the format of a required data field because the input of that data field does not match that specified in data format 6.4 for patients.
+[CLASSE RemoteMonitoringDataBeanValidator.java] (1492 chars)
+package edu.ncsu.csc.itrust.validate;
+
+import edu.ncsu.csc.itrust.action.AddRemoteMonitoringDataAction;
+import edu.ncsu.csc.itrust.beans.RemoteMonitoringDataBean;
+import edu.ncsu.csc.itrust.exception.ErrorList;
+import edu.ncsu.csc.itrust.exception.FormValidationException;
+
+/**
+ * Validator used to validate adding new remote monitoring data in {@link AddRemoteMonitoringDataAction}
+ * 
+ */
+public class RemoteMonitoringDataBeanValidator extends BeanValidator<RemoteMonitoringDataBean> {
+	/**
+	 * The
+
+
+[REQ UC5S2.txt]
+For creating, viewing, modifying, or deleting information, the following information is recorded: the MID of the logged in user, any appropriate secondary MID of the user whose information is being accessed, a transaction type corresponding to the given action, and the current timestamp.
+[CLASSE UpdateICDCodeListAction.java] (3147 chars)
+package edu.ncsu.csc.itrust.action;
+
+import edu.ncsu.csc.itrust.beans.DiagnosisBean;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.dao.mysql.ICDCodesDAO;
+import edu.ncsu.csc.itrust.dao.mysql.TransactionDAO;
+import edu.ncsu.csc.itrust.enums.TransactionType;
+import edu.ncsu.csc.itrust.exception.DBException;
+import edu.ncsu.csc.itrust.exception.FormValidationException;
+import edu.ncsu.csc.itrust.exception.iTrustException;
+import edu.ncsu.csc.itrust.validate.DiagnosisBeanVali
+
+
+[REQ UC23S3.txt]
+The LHCP can view of the comprehensive patient report for the specified patient, including the information below.
+All patient demographic information (address, phone, etc), see (UC4) and Data Format 6.1
+The entire history of personal health records, see (UC10) and Data Format 6.4
+All diagnoses, including those not normally viewable by the requesting LHCP, see (UC11) and Data Format 6.5
+All designated HCPs (MIDs and Names), see (UC6)
+All allergies, procedures, medications, office visits, and know
+[CLASSE PatientLoader.java] (5148 chars)
+package edu.ncsu.csc.itrust.beans.loaders;
+
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+import edu.ncsu.csc.itrust.beans.PatientBean;
+
+/**
+ * A loader for PatientBeans.
+ * 
+ * Loads in information to/from beans using ResultSets and PreparedStatements. Use the superclass to enforce consistency. 
+ * For details 
+
+
+[REQ UC5S2.txt]
+For creating, viewing, modifying, or deleting information, the following information is recorded: the MID of the logged in user, any appropriate secondary MID of the user whose information is being accessed, a transaction type corresponding to the given action, and the current timestamp.
+[CLASSE ChronicDiseaseRiskAction.java] (2776 chars)
+package edu.ncsu.csc.itrust.action;
+
+import java.util.List;
+import edu.ncsu.csc.itrust.action.base.PatientBaseAction;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.dao.mysql.AuthDAO;
+import edu.ncsu.csc.itrust.dao.mysql.TransactionDAO;
+import edu.ncsu.csc.itrust.enums.TransactionType;
+import edu.ncsu.csc.itrust.exception.DBException;
+import edu.ncsu.csc.itrust.exception.NoHealthRecordsException;
+import edu.ncsu.csc.itrust.exception.iTrustException;
+import edu.ncsu.csc.itr
+
+
+[REQ UC10S1.txt]
+The health care personnel enters a MID [E1] of a patient and confirms their selection [E2]. The health care personnel may enter/edit personal health information including editing historical values from Data Format 6.4.1, 6.4.2, 6.4.3, and 6.4.4, immunizations, and office visit information (date, diagnoses, medication, name of attending physician but not notes, laboratory procedures), family history (the MIDs of the patient's mother and father), and Body Mass Index (BMI) [S3]. The HCP can indicat
+[CLASSE HealthRecordFormValidator.java] (1732 chars)
+package edu.ncsu.csc.itrust.validate;
+
+import edu.ncsu.csc.itrust.action.EditHealthHistoryAction;
+import edu.ncsu.csc.itrust.beans.forms.HealthRecordForm;
+import edu.ncsu.csc.itrust.exception.ErrorList;
+import edu.ncsu.csc.itrust.exception.FormValidationException;
+
+/**
+ * Validator used in adding health information on Basic Health History, {@link EditHealthHistoryAction}
+ * 
+ * @author Andy
+ * 
+ */
+public class HealthRecordFormValidator extends BeanValidator<HealthRecordForm> {
+	/**
+	 * Performs
+
+
+[REQ UC40S7.txt]
+The user selects a laboratory procedure from the calendar to read its details by clicking the Read Details link beside or below the LOINC code displayed for the laboratory procedure, and then the details for the laboratory procedure shall be displayed in a new page, including laboratory procedure code, status, commentary, results, andoffice visit date when the laboratory procedure was ordered.
+[CLASSE LabProcedureDAO.java] (11403 chars)
+package edu.ncsu.csc.itrust.dao.mysql;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+import edu.ncsu.csc.itrust.DBUtil;
+import edu.ncsu.csc.itrust.beans.LabProcedureBean;
+import edu.ncsu.csc.itrust.beans.loaders.LabProcedureBeanLoader;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.exception.DBException;
+
+/**
+ * A DAO for managing lab procedure codes. Database Access Object. A
+
+
+[REQ UC40S2.txt]
+A user (a patient) chooses to display his/her appointments in the current month together with his/her office visit dates, prescription dates, and lab procedure dates of the current month on a calendar for the current month. His/her appointments shall be displayed on the calendar [S3]. The user can select an appointment from the calendar to read the appointment's details [S4]. In the calendar, the date entry with an office visit shall display a label as the diagnoses (i.e., ICD-9CM codes) for the
+[CLASSE PrescriptionReportAction.java] (6484 chars)
+package edu.ncsu.csc.itrust.action;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import edu.ncsu.csc.itrust.ParameterUtil;
+import edu.ncsu.csc.itrust.action.base.PatientBaseAction;
+import edu.ncsu.csc.itrust.beans.OfficeVisitBean;
+import edu.ncsu.csc.itrust.beans.PatientBean;
+import edu.ncsu.csc.itrust.beans.PrescriptionReportBean;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.dao.mysql.OfficeVisitDAO;
+import edu.ncsu
+
+
+[REQ UC9S2.txt]
+The patient or personal health representative can see an abbreviated health history of their siblings, parents, and both sets of grandparents for which MIDs are available in iTrust.
+They can see diagnoses related to the following [presented as a table with an x if the family member suffered from that diagnosis]:
+High blood pressure (Systolic blood pressure over 240 mmHg and/or a diastolic blood pressure over 120 mmHg);
+high cholesterol (HDL (good) cholesterol levels under 35 mg/dL (milligrams pe
+[CLASSE OfficeVisitDAO.java] (23427 chars)
+package edu.ncsu.csc.itrust.dao.mysql;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.ArrayList;
+import edu.ncsu.csc.itrust.DBUtil;
+import edu.ncsu.csc.itrust.beans.DiagnosisBean;
+import edu.ncsu.csc.itrust.beans.LabProcedureBean;
+import edu.ncsu.csc.itrust.beans.OfficeVisitBean;
+import edu.ncsu.csc.itrust.beans.PrescriptionBe
+
+
+[REQ UC25.txt]
+A user chooses to view physician satisfaction survey results. The user provides a zip code [E1] Or a hospital code and an (optional) physician type (from a pull-down list: see data format 6.2 - general, surgeon, heart specialist, pediatrician, OB/GYN). The patient is provided with the following for each physician of that type that practices in a zip code (based upon the address/zipcode provided in UC2) that match the first three digits of the provided zip code:
+Name, address, average number of m
+[CLASSE ViewVisitedHCPsAction.java] (7356 chars)
+package edu.ncsu.csc.itrust.action;
+
+import java.util.List;
+import java.util.ArrayList;
+import edu.ncsu.csc.itrust.beans.PersonnelBean;
+import edu.ncsu.csc.itrust.beans.OfficeVisitBean;
+import edu.ncsu.csc.itrust.beans.HCPVisitBean;
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.dao.mysql.PatientDAO;
+import edu.ncsu.csc.itrust.dao.mysql.PersonnelDAO;
+import edu.ncsu.csc.itrust.dao.mysql.OfficeVisitDAO;
+import edu.ncsu.csc.itrust.exception.DBException;
+import edu.ncsu.csc.i
+

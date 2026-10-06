@@ -1,0 +1,40 @@
+req_id,test_id,n_configs,configs
+UC10S1.txt,HealthRecordFormValidator.java,8,"Claude Sonnet 4, GPT-4o-mini, Gemini Flash"
+UC5S2.txt,ChronicDiseaseRiskAction.java,8,"Claude Sonnet 4, GPT-4o-mini, Gemini Flash, Perplexity Sonar"
+UC5S2.txt,UpdateICDCodeListAction.java,7,"Claude Sonnet 4, DeepSeek V3, GPT-4o-mini"
+UC1E1.txt,RemoteMonitoringDataBeanValidator.java,6,"Claude Sonnet 4, DeepSeek V3, GPT-4o-mini, Gemini Flash"
+UC18S1.txt,EditOfficeVisitValidator.java,3,"Claude Sonnet 4, GPT-4o-mini"
+UC13.txt,DeclareHCPAction.java,3,GPT-4o-mini
+UC9S2.txt,OfficeVisitDAO.java,3,GPT-4o-mini
+UC2S1.txt,UpdateHospitalListAction.java,3,"GPT-4o-mini, Perplexity Sonar"
+UC40S2.txt,PrescriptionReportAction.java,3,GPT-4o-mini
+UC25.txt,ViewVisitedHCPsAction.java,2,GPT-4o-mini
+UC40S4.txt,EditOfficeVisitAction.java,2,GPT-4o-mini
+UC11S1.txt,PatientVisitBean.java,2,Perplexity Sonar
+UC40S2.txt,ViewVisitedHCPsAction.java,2,GPT-4o-mini
+UC34S2.txt,ReportRequestDAO.java,2,GPT-4o-mini
+UC23S3.txt,PatientLoader.java,2,GPT-4o-mini
+UC15S2.txt,DAOFactory.java,1,Perplexity Sonar
+UC13E1.txt,FormValidationException.java,1,GPT-4o-mini
+UC10E1.txt,EditRepresentativesAction.java,1,Perplexity Sonar
+UC11E2.txt,MyDiagnosisAction.java,1,GPT-4o-mini
+UC22S2.txt,TransactionType.java,1,Perplexity Sonar
+UC19S3.txt,PrescriptionReportBean.java,1,Perplexity Sonar
+UC19S3.txt,PatientDAO.java,1,GPT-4o-mini
+UC19E1.txt,PersonnelBaseAction.java,1,GPT-4o-mini
+UC30E1.txt,PatientDAO.java,1,Perplexity Sonar
+UC2E2.txt,AddPatientValidator.java,1,GPT-4o-mini
+UC26S4.txt,LabProcedureBean.java,1,Perplexity Sonar
+UC26E1.txt,DiagnosisBeanLoader.java,1,Perplexity Sonar
+UC23E1.txt,ViewMyRecordsAction.java,1,Claude Sonnet 4
+UC21E2.txt,LabProcHCPAction.java,1,Perplexity Sonar
+UC22E1.txt,AddERespAction.java,1,Perplexity Sonar
+UC34S4.txt,ValidationFormat.java,1,GPT-4o-mini
+UC40S2.txt,LOINCDAO.java,1,GPT-4o-mini
+UC40S2.txt,PrescriptionBean.java,1,GPT-4o-mini
+UC35S1.txt,ViewReportAction.java,1,Perplexity Sonar
+UC37S1.txt,ViewOfficeVisitAction.java,1,GPT-4o-mini
+UC4S2.txt,EditOfficeVisitForm.java,1,GPT-4o-mini
+UC40S7.txt,LabProcedureDAO.java,1,GPT-4o-mini
+UC9S1.txt,LabProcUAPAction.java,1,GPT-4o-mini
+UC9S2.txt,ValidationFormat.java,1,GPT-4o-mini

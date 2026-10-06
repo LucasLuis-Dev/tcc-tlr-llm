@@ -1,0 +1,4 @@
+Estratégia,Tokens_entrada_est_total_por_modelo,Tokens_entrada_est_médio_por_par,Tokens_entrada_est_mediana,Tokens_entrada_est_p95
+Zero-shot,1224661,1427.3441142191143,871.25,3995.787499999997
+Few-shot,1357436,1582.0941142191143,1026.0,4150.537499999998
+CoT,1253618,1461.0941142191143,905.0,4029.537499999997

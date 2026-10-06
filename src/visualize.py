@@ -15,11 +15,11 @@ OUTPUT_DIR = BASE_DIR / "results" / "figures"
 
 # Mapeamento de nomes oficiais dos modelos para rótulos legíveis
 MODEL_LABEL_MAP = {
-    "anthropic/claude-3.5-sonnet": "Claude 3.5 Sonnet",
+    "anthropic/claude-3.5-sonnet": "Claude Sonnet 4",
     "openai/gpt-4o-mini": "GPT-4o-mini",
-    "deepseek/deepseek-chat": "DeepSeek-Chat",
+    "deepseek/deepseek-chat": "DeepSeek V3",
     "perplexity/llama-3.1-sonar-large-128k-chat": "Perplexity Sonar",
-    "gemini-3.6-flash": "Gemini 3.6 Flash"
+    "gemini-3.6-flash": "Gemini Flash"
 }
 
 # Ordem padronizada de estratégias
@@ -133,11 +133,11 @@ def plot_precision_vs_recall(df: pd.DataFrame, output_dir: Path):
     df_valid = df.copy()
 
     model_colors = {
-        "Claude 3.5 Sonnet": "#1f77b4",
+        "Claude Sonnet 4": "#1f77b4",
         "GPT-4o-mini": "#2ca02c",
-        "DeepSeek-Chat": "#ff7f0e",
+        "DeepSeek V3": "#ff7f0e",
         "Perplexity Sonar": "#9467bd",
-        "Gemini 3.6 Flash": "#d62728"
+        "Gemini Flash": "#d62728"
     }
 
     markers = {
@@ -163,9 +163,9 @@ def plot_precision_vs_recall(df: pd.DataFrame, output_dir: Path):
 
     # Anotações para pontos-chave de interesse científico
     annotations = [
-        ("GPT-4o-mini (CoT)", "GPT-4o-mini", "Chain-of-Thought (CoT)", (-65, -25)),
+        ("GPT-4o-mini (Few-shot)", "GPT-4o-mini", "Few-Shot", (-65, -25)),
         ("Perplexity (Few-Shot)", "Perplexity Sonar", "Few-Shot", (-75, 10)),
-        ("Claude 3.5 Sonnet (Few-Shot)", "Claude 3.5 Sonnet", "Few-Shot", (-110, -25)),
+        ("Claude Sonnet 4 (Few-Shot)", "Claude Sonnet 4", "Few-Shot", (-110, -25)),
     ]
 
     for label, model_name, strategy_name, offset in annotations:

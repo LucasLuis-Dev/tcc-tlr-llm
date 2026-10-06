@@ -1,0 +1,6 @@
+fator,n_FN,% dos FN
+Baixa similaridade lexical (1º quartil de TF-IDF),64,0.49230769230769234
+Código extenso (4º quartil de tamanho),43,0.33076923076923076
+Implementação distribuída (requisito com 3+ classes),89,0.6846153846153846
+Classe de apoio (Bean/Loader/Validator/Exception/outras),20,0.15384615384615385
+Classe compartilhada (ligada a 5+ requisitos),105,0.8076923076923077

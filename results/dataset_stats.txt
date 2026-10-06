@@ -1,0 +1,85 @@
+﻿Total de requisitos carregados: 131
+Total de casos de teste/classes carregados: 226
+Total de elos v├ílidos (ground truth = 1): 286
+REQ chars: mean 357 median 255 min 59 max 1832
+CODE chars: mean 3192 median 2069 min 304 max 24366
+lines code median 72.5
+reqs com >=1 elo: 105 de 131 | sem elo: 26
+classes com >=1 elo: 87 de 226 | sem elo: 139
+elos por req (entre os que t├¬m): m├®dia 2.72 mediana 2.0 m├íx 9
+elos por classe (entre as que t├¬m): m├®dia 3.29 mediana 1.0 m├íx 32
+top classes: {'AuthDAO.java': 32, 'PatientDAO.java': 24, 'GetUserNameAction.java': 21, 'EmailUtil.java': 13, 'PersonnelDAO.java': 12, 'OfficeVisitDAO.java': 10}
+tipos de req: {'S': 88, 'E': 36, 'UC': 7}
+
+--- exemplo UC10E1 ---
+The health care professional types an invalid medical identification number and is prompted to try again.
+['GetUserNameAction.java', 'AuthDAO.java']
+
+--- GetUserNameAction.java ---
+package edu.ncsu.csc.itrust.action;
+
+import edu.ncsu.csc.itrust.dao.DAOFactory;
+import edu.ncsu.csc.itrust.exception.iTrustException;
+
+/**
+ * Handles Getting the person's name associated with a certain mid Used by getUser.jsp
+ * 
+ * @author laurenhayward
+ * 
+ */
+public class GetUserNameAction {
+	private DAOFactory factory;
+
+	/**
+	 * Set up defaults
+	 * 
+	 * @param factory The DAOFactory used for creating the DAOs for this action.
+	 */
+	public GetUserNameAction(DAOFactory factory) {
+		this.factory = factory;
+	}
+
+	/**
+	 * Returns the person's name that matches the inputMID param
+	 * 
+	 * @param inputMID The MID to look up.
+	 * @return the person's name
+	 * @throws DBException
+	 * @throws iTrustException
+	 */
+	public String getUserName(String inputMID) throws iTrustException {
+		try {
+			long mid = Long.valueOf(inputMID);
+			return factory.getAuthDAO().getUserName(mid);
+		} catch (NumberFormatException e) {
+			throw new iTrustException("MID not in correct form");
+		}
+	}
+}
+
+--- FN exemplos ---
+        req_id                 test_id  tfidf  code_chars  links_do_req  links_da_classe
+0   UC27S2.txt          EmailUtil.java    0.0         857             2               13
+8   UC30E2.txt  GetUserNameAction.java    0.0         983             2               21
+29  UC10E2.txt  GetUserNameAction.java    0.0         983             2               21
+28  UC26E1.txt  GetUserNameAction.java    0.0         983             2               21
+25  UC23E2.txt  GetUserNameAction.java    0.0         983             2               21
+30  UC36S3.txt          EmailUtil.java    0.0         857             6               13
+         req_id       test_id     tfidf  code_chars  links_do_req  links_da_classe
+33    UC2S1.txt  AuthDAO.java  0.108554       13790             3               32
+17   UC23E2.txt  AuthDAO.java  0.020086       13790             2               32
+104  UC13E1.txt  AuthDAO.java  0.019064       13790             2               32
+105  UC30E1.txt  AuthDAO.java  0.023262       13790             2               32
+19   UC10S1.txt  AuthDAO.java  0.042761       13790             7               32
+18   UC23S1.txt  AuthDAO.java  0.046928       13790             2               32
+        req_id                       test_id     tfidf  code_chars  links_do_req  links_da_classe
+3   UC30E1.txt        GetUserNameAction.java  0.026367         983             2               21
+4   UC15E1.txt   ProcedureBeanValidator.java  0.050099        1185             4                1
+8   UC30E2.txt        GetUserNameAction.java  0.000000         983             2               21
+11   UC3E1.txt      ResetPasswordAction.java  0.190524        7490             2                5
+12  UC15E1.txt  MedicationBeanValidator.java  0.049071        1188             4                1
+15  UC21E1.txt        GetUserNameAction.java  0.025938         983             2               21
+
+ UC22E1.txt The user inputs invalid information and is prompted to try again. []
+
+ UC19S1.txt The user (patient or personal health representative) can choose to view a list of (1) their own prescriptions or (2) the prescriptions for whom the user is a person health representative by choosing one patient from a a list of these patients. A prescription list is then displayed [S3], sorted by start date (the later date is ranked earlier). ['EmailUtil.java', 'ViewPrescriptionRecordsAction.java', 'PatientDAO.java']

@@ -5,3 +5,4 @@ data/processed/*.csv
 !data/processed/multimodel_prompt_results.csv
 .ipynb_checkpoints
 iTrust/
+TCC_UFPE___ABNT/
